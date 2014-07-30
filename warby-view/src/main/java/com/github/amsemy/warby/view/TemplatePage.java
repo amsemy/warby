@@ -25,12 +25,67 @@ import javax.servlet.http.HttpServletResponse;
  * @see  SimplePage
  * @see  Unit
  */
-@RstPojo
 public abstract class TemplatePage implements RequestSettable, Viewable {
 
     /**
-     * Локаль страницы.
+     * Бин шаблонной страницы.
      */
+    @RstPojo
+    public class Bean {
+
+        /**
+         * Список скриптов страницы.
+         */
+        public Collection<String> jscriptList;
+
+        /**
+         * Список стилей страницы.
+         */
+        public Collection<String> styleList;
+
+        /**
+         * Создаёт бин.
+         */
+        public Bean() {
+            List<Unit> units = buildUnitList(getUnitList());
+            jscriptList = buildJscriptList(units);
+            styleList = buildStyleList(units);
+        }
+
+        /**
+         * Возвращает конфигурацию страницы.
+         *
+         * @return  Строка, содержащая JSON.
+         */
+        public String getConfig() {
+            try {
+                return RestyJson.build(this).toString();
+            } catch (RestyMappingException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
+        /**
+         * Возвращает язык страницы.
+         *
+         * @return  Код языка страницы или пустая строка, если язык не определён.
+         */
+        @RstGetter("lang")
+        public String getLang() {
+            return locale.getLanguage();
+        }
+
+        /**
+         * Возвращает название импользуемого макета шаблона (из {@code /templates}).
+         *
+         * @return  Название используемого макета шаблона.
+         */
+        public String getTemplateName() {
+            return templateName;
+        }
+
+    }
+
     private Locale locale;
 
     /**
@@ -76,55 +131,7 @@ public abstract class TemplatePage implements RequestSettable, Viewable {
         unitList.add(unit);
     }
 
-    /**
-     * Форматирует путь.
-     *
-     * @param  str
-     *         Путь.
-     * @return  Отформатированный путь.
-     */
-    private String formatPath(String str) {
-        return str.replaceAll("\\$\\{lang\\}", locale.getLanguage());
-    }
-
-    /**
-     * Возвращает список юнитов, от которых зависит страница, с разрешением
-     * зависимостей.
-     *
-     * @param  unitList
-     *         Список юнитов.
-     * @return  Список юнитов с разрешёнными зависимостями.
-     */
-    private List<Unit> getAllUnits(List<Unit> unitList) {
-        List<Unit> result = new ArrayList<>();
-        for(Unit u : unitList) {
-            result.addAll(u.getAllUnits());
-            result.add(u);
-        }
-        return result;
-    }
-
-    /**
-     * Возвращает конфигурацию страницы.
-     *
-     * @return  Строка, содержащая JSON.
-     */
-    public String getConfig() {
-        try {
-            return RestyJson.build(this).toString();
-        } catch (RestyMappingException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    /**
-     * По списку юнитов строит список скриптов.
-     *
-     * @param  unitList
-     *         Список юнитов.
-     * @return  Список скриптов.
-     */
-    private Collection<String> getJscripts(List<Unit> unitList) {
+    private Collection<String> buildJscriptList(List<Unit> unitList) {
         Set<String> jsScripts = new LinkedHashSet<>();
         for (Unit u : unitList) {
             jsScripts.addAll(u.getJscriptList());
@@ -137,24 +144,7 @@ public abstract class TemplatePage implements RequestSettable, Viewable {
         return result;
     }
 
-    /**
-     * Возвращает язык страницы.
-     *
-     * @return  Код языка страницы или пустая строка, если язык не определён.
-     */
-    @RstGetter("lang")
-    public String getLang() {
-        return locale.getLanguage();
-    }
-
-    /**
-     * По списку юнитов строит список стилей.
-     *
-     * @param  unitList
-     *         Список юнитов.
-     * @return  Список стилей.
-     */
-    private Collection<String> getStyles(List<Unit> unitList) {
+    private Collection<String> buildStyleList(List<Unit> unitList) {
         Set<String> styles = new LinkedHashSet<>();
         for (Unit u : unitList) {
             styles.addAll(u.getStyleList());
@@ -167,17 +157,22 @@ public abstract class TemplatePage implements RequestSettable, Viewable {
         return result;
     }
 
-    /**
-     * Возвращает название импользуемого макета шаблона (из {@code /templates}).
-     *
-     * @return  Название используемого макета шаблона.
-     */
-    public String getTemplateName() {
-        return templateName;
+    private List<Unit> buildUnitList(List<Unit> unitList) {
+        List<Unit> result = new ArrayList<>();
+        for(Unit u : unitList) {
+            result.addAll(u.getAllUnits());
+            result.add(u);
+        }
+        return result;
+    }
+
+    private String formatPath(String str) {
+        return str.replaceAll("\\$\\{lang\\}", locale.getLanguage());
     }
 
     /**
-     * Возвращает список юнитов, используемых страницей.
+     * Возвращает список юнитов, используемых страницей. Необходимо перекрывать
+     * в наследниках.
      *
      * @return  Список юнитов.
      */
@@ -194,10 +189,7 @@ public abstract class TemplatePage implements RequestSettable, Viewable {
 
     @Override
     public void setToRequest(ServletRequest request) {
-        request.setAttribute("templatePage", this);
-        List<Unit> units = getAllUnits(getUnitList());
-        request.setAttribute("jscriptList", getJscripts(units));
-        request.setAttribute("styleList", getStyles(units));
+        request.setAttribute("templatePage", new Bean());
     }
 
 }

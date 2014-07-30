@@ -302,6 +302,8 @@ public class Warby {
     public void invoke(Map<String, String[]> reqParams)
             throws WarbyInvokeException, WarbyRequireParamException,
             WarbyValueFormatException {
+// TODO: сделать нормально оповещение о неправильном маппинге
+// например нет ни @WrbAction, ни @WrbDefaultAction
         String[] params = reqParams.get(aidName);
         WarbyAction action;
         if (params == null) {
