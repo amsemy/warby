@@ -14,6 +14,7 @@
     <modules>
         <module>warby-annotation</module>
         <module>warby-controller</module>
+        <module>warby-view</module>
     </modules>
 
     <build>
