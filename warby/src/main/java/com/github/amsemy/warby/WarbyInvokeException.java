@@ -24,35 +24,34 @@ public class WarbyInvokeException extends WarbyException {
             = "Unable invoke action '%2$s' of class '%1$s', because param '%3$s' have unsupported typeKind '%4$s'";
 
     /**
-     * Создаёт исключение.
+     * Создаёт исключение без детализирующего сообщения.
      */
     public WarbyInvokeException() {
         super();
     }
 
     /**
-     * Создаёт исключение с указанным сообщением. Сообщение может быть записано
-     * в лог сервера и/или отображено для пользователя.
+     * Создаёт исключение с детализирующим сообщением.
      *
      * @param  message
-     *         Строка, содержащая сообщение исключения.
+     *         Детализирующее сообщение.
      */
     public WarbyInvokeException(String message) {
         super(message);
     }
 
     /**
-     * Создаёт исключение с указанным шаблонным сообщением. Сообщение может быть
-     * записано в лог сервера и/или отображено для пользователя.
+     * Создаёт исключение с детализирующим сообщением.
      *
-     * @param  fromatMessage
-     *         {@link java.util.Formatter Форматируемая строка}, содержащая
-     *         сообщение исключения.
-     * @param  args
-     *         Параметры форматируемой строки.
+     * @param  message
+     *         Детализирующее сообщение.
+     * @param  params
+     *         Параметры для форматирования сообщения.
+     *
+     * @see  java.util.Formatter
      */
-    public WarbyInvokeException(String fromatMessage, Object... args) {
-        super(fromatMessage, args);
+    public WarbyInvokeException(String message, Object... params) {
+        super(message, params);
     }
 
 }

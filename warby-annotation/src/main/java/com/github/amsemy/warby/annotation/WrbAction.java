@@ -6,10 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Указывает, что данный метод является обработчиком действия. Аннотация
+ * Указывает, что данный метод является обработчиком действия. Метод будет
+ * вызван, если запрос содержит AID с именем данного действия. Аннотация
  * применима только к методам классов, являющихся обработчиком запросов.
  *
- * @see  WrbRequest
+ * @see  WrbService
  * @see  WrbDefaultAction
  * @see  WrbParam
  * @see  WrbRequiredParams
@@ -20,8 +21,10 @@ import java.lang.annotation.Target;
 public @interface WrbAction {
 
     /**
-     * (Необязательно) Указывает имя действия. Если отсутствует, то в качестве
+     * (Необязательно) Возвращает имя действия. Если отсутствует, то в качестве
      * имени действия будет использовано имя метода.
+     *
+     * @return  Имя действия или {@code ""}.
      */
     String value() default "";
 

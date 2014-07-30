@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * Аннотация применима только к методам классов, являющихся обработчиком
  * запросов.
  *
- * @see  WrbRequest
+ * @see  WrbService
  * @see  WrbAction
  * @see  WrbParam
  * @see  WrbRequiredParams

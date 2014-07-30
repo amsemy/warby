@@ -56,8 +56,8 @@ public abstract class WarbyHttpServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        localReq = new ThreadLocal<HttpServletRequest>();
-        localResp = new ThreadLocal<HttpServletResponse>();
+        localReq = new ThreadLocal<>();
+        localResp = new ThreadLocal<>();
         try {
             wrb = new Warby(this);
         } catch (WarbyException ex) {

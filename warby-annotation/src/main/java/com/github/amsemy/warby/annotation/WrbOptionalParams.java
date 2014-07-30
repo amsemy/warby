@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * классов, являющихся обработчиком запросов. Несовместима с аннотацией
  * {@link WrbRequiredParams}.
  *
- * @see  WrbRequest
+ * @see  WrbService
  * @see  WrbAction
  * @see  WrbDefaultAction
  * @see  WrbRequiredParams
@@ -21,6 +21,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface WrbOptionalParams {
 
+    /**
+     * (Необязательно) Возвращает список необязательных параметов.
+     *
+     * @return  Массив имён параметров запроса.
+     */
     String[] value() default {};
 
 }

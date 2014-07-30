@@ -5,8 +5,8 @@ import com.github.amsemy.warby.annotation.WrbDefaultAction;
 import com.github.amsemy.warby.annotation.WrbOptionalParams;
 import com.github.amsemy.warby.annotation.WrbParam;
 import com.github.amsemy.warby.annotation.WrbPojo;
-import com.github.amsemy.warby.annotation.WrbRequest;
 import com.github.amsemy.warby.annotation.WrbRequiredParams;
+import com.github.amsemy.warby.annotation.WrbService;
 import static com.github.amsemy.warby.WarbyException.*;
 
 import java.lang.annotation.Annotation;
@@ -52,37 +52,31 @@ public class Warby {
                     throw new WarbyException(MSG_REQUIRE_CONFLICT,
                             objCl);
                 } else {
-                    exceptSet = new HashSet<String>(Arrays.asList(wrbReqParams.value()));
-                    if (exceptSet.size() > 0) {
-                        // Указан список обязательных параметров, значит наличие
-                        // остальных параметров являются необязательным
-                        defaultRequire = false;
-                    } else {
-                        // Список не указан, наличие всех параметров являются
-                        // обязательным
-                        defaultRequire = true;
-                    }
+                    exceptSet = new HashSet<>(Arrays.asList(wrbReqParams.value()));
+                    // Если указан список обязательных параметров, значит
+                    // наличие остальных параметров являются необязательным
+                    // (defaultRequire = false).
+                    // Если список не указан, то наличие всех параметров
+                    // являются обязательным (defaultRequire = true).
+                    defaultRequire = !exceptSet.isEmpty();
                 }
             } else {
                 if (wrbOptParams != null) {
-                    exceptSet = new HashSet<String>(Arrays.asList(wrbOptParams.value()));
-                    if (exceptSet.size() > 0) {
-                        // Указан список необязательных параметров, значит наличие
-                        // остальных параметров являются обязательным
-                        defaultRequire = true;
-                    } else {
-                        // Список не указан, наличие всех параметров являются
-                        // необязательным
-                        defaultRequire = false;
-                    }
+                    exceptSet = new HashSet<>(Arrays.asList(wrbOptParams.value()));
+                    // Если указан список необязательных параметров, значит
+                    // наличие остальных параметров являются обязательным
+                    // (defaultRequire = true).
+                    // Если список не указан, то наличие всех параметров
+                    // являются необязательным (defaultRequire = false).
+                    defaultRequire = exceptSet.isEmpty();
                 } else {
                     // Ни какой список не указан. Все параметры по умолчанию
                     // считаются обязательными
-                    exceptSet = new HashSet<String>();
+                    exceptSet = new HashSet<>();
                     defaultRequire = true;
                 }
             }
-            uniqueSet = new HashSet<String>();
+            uniqueSet = new HashSet<>();
             // Собрать список параметров
             Class<?>[] typeArray = action.method.getParameterTypes();
             Annotation[][] anatatArray = action.method.getParameterAnnotations();
@@ -229,9 +223,9 @@ public class Warby {
          */
         public void build() throws WarbyException {
             Class<?> objCl = Warby.this.obj.getClass();
-            WrbRequest wrbRequest = objCl.getAnnotation(WrbRequest.class);
-            if (wrbRequest != null) {
-                Warby.this.aidName = wrbRequest.aidName();
+            WrbService wrbService = objCl.getAnnotation(WrbService.class);
+            if (wrbService != null) {
+                Warby.this.aidName = wrbService.aidName();
                 if (!Warby.this.aidName.isEmpty()) {
                     // Найти и добавить все действия
                     for (Method m : objCl.getDeclaredMethods()) {
@@ -256,8 +250,6 @@ public class Warby {
                                 action = new WarbyAction(null, m);
                                 addActionParams();
                                 Warby.this.defaultAction = action;
-                            } else {
-                                continue;
                             }
                         }
                     }
@@ -266,7 +258,7 @@ public class Warby {
                             objCl);
                 }
             } else {
-                throw new WarbyException(MSG_MISSING_REQUEST_ANNOTATION,
+                throw new WarbyException(MSG_MISSING_WRB_SERVICE_ANNOTATION,
                         objCl);
             }
         }
@@ -287,7 +279,7 @@ public class Warby {
      *          Если были ошибки при построении списка действий.
      */
     public Warby(Object obj) throws WarbyException {
-        actionMap = new HashMap<String, WarbyAction>();
+        actionMap = new HashMap<>();
         aidName = "";
         defaultAction = null;
         this.obj = obj;

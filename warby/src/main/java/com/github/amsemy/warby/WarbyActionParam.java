@@ -84,7 +84,7 @@ class WarbyActionParam {
                     typeKind = WarbyTypeKind.POJO;
                 }
                 isPrimitive = false;
-                params = new ArrayList<WarbyActionParam>();
+                params = new ArrayList<>();
             } else {
                 Class<?> cl = (type.isArray()) ? type.getComponentType() : type;
                 if (cl.isPrimitive() && cl != char.class) {

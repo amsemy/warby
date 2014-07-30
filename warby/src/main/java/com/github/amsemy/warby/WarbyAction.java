@@ -32,7 +32,7 @@ class WarbyAction {
     WarbyAction(String name, Method method) {
         this.name = name;
         this.method = method;
-        params = new ArrayList<WarbyActionParam>();
+        params = new ArrayList<>();
     }
 
     /**

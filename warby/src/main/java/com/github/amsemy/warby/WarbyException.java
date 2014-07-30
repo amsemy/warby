@@ -15,8 +15,8 @@ public class WarbyException extends Exception {
             = "Empty AID name' for '%1$s' class";
     static final String MSG_EMPTY_PARAM_NAME
             = "Action '%2$s' of class '%1$s' has param with empty name";
-    static final String MSG_MISSING_REQUEST_ANNOTATION
-            = "Class '%1$s' haven't necessary 'WrbRequest' annotation";
+    static final String MSG_MISSING_WRB_SERVICE_ANNOTATION
+            = "Class '%1$s' haven't necessary 'WrbService' annotation";
     static final String MSG_DUBLICATE_ACTION
             = "Dublicate action '%4$s' of '%1$s' class";
     static final String MSG_DUBLICATE_DEFAULT_ACTION
@@ -37,35 +37,34 @@ public class WarbyException extends Exception {
             = "Action '%2$s' of class '%1$s' have param '%3$s' without necessary constructor";
 
     /**
-     * Создаёт исключение.
+     * Создаёт исключение без детализирующего сообщения.
      */
     public WarbyException() {
         super();
     }
 
     /**
-     * Создаёт исключение с указанным сообщением. Сообщение может быть записано
-     * в лог сервера и/или отображено для пользователя.
+     * Создаёт исключение с детализирующим сообщением.
      *
      * @param  message
-     *         Строка, содержащая сообщение исключения.
+     *         Детализирующее сообщение.
      */
     public WarbyException(String message) {
         super(message);
     }
 
     /**
-     * Создаёт исключение с указанным шаблонным сообщением. Сообщение может быть
-     * записано в лог сервера и/или отображено для пользователя.
+     * Создаёт исключение с детализирующим сообщением.
      *
-     * @param  fromatMessage
-     *         {@link java.util.Formatter Форматируемая строка}, содержащая
-     *         сообщение исключения.
-     * @param  args
-     *         Параметры форматируемой строки.
+     * @param  message
+     *         Детализирующее сообщение.
+     * @param  params
+     *         Параметры для форматирования сообщения.
+     *
+     * @see  java.util.Formatter
      */
-    public WarbyException(String fromatMessage, Object... args) {
-        super(String.format(fromatMessage, args));
+    public WarbyException(String message, Object... params) {
+        super(String.format(message, params));
     }
 
 }
