@@ -1,4 +1,4 @@
-package warby;
+package com.github.amsemy.warby;
 
 /**
  * Общее исключение для всех ошибок, которые возникают при вызове действия.

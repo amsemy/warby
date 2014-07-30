@@ -1,4 +1,4 @@
-package warby;
+package com.github.amsemy.warby;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
  * HttpServlet, который выполняет те или иные действия в зависимости от
  * параметров запроса.
  *
- * @see  WrbAction.
+ * @see  com.github.amsemy.warby.annotation.WrbAction
  */
 public abstract class WarbyHttpServlet extends HttpServlet {
 

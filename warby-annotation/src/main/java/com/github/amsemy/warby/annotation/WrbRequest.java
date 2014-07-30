@@ -1,4 +1,4 @@
-package warby;
+package com.github.amsemy.warby.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
  * Указывает, что класс данный является обработчиком запросов. Аннотация
  * применима только к классам.
  *
- * @see  Warby
  * @see  WrbAction
  */
 @Target(ElementType.TYPE)

@@ -1,10 +1,22 @@
-package warby;
+package com.github.amsemy.warby;
+
+import com.github.amsemy.warby.annotation.WrbAction;
+import com.github.amsemy.warby.annotation.WrbDefaultAction;
+import com.github.amsemy.warby.annotation.WrbOptionalParams;
+import com.github.amsemy.warby.annotation.WrbParam;
+import com.github.amsemy.warby.annotation.WrbPojo;
+import com.github.amsemy.warby.annotation.WrbRequest;
+import com.github.amsemy.warby.annotation.WrbRequiredParams;
+import static com.github.amsemy.warby.WarbyException.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.*;
-import static warby.WarbyException.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Warby.

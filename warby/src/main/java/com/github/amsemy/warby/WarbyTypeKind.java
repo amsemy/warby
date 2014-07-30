@@ -1,4 +1,4 @@
-package warby;
+package com.github.amsemy.warby;
 
 /**
  * Информация о типе парметра действия.

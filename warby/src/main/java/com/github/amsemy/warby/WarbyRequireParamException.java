@@ -1,4 +1,4 @@
-package warby;
+package com.github.amsemy.warby;
 
 /**
  * Исключение, которое возникает при отсутствии значения для обязательного

@@ -1,4 +1,6 @@
-package warby;
+package com.github.amsemy.warby;
+
+import static com.github.amsemy.warby.WarbyInvokeException.*;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -8,7 +10,6 @@ import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import static warby.WarbyInvokeException.*;
 
 /**
  * Действие. Обработчик запросов в зависимости от параметров может выполнять

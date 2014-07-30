@@ -1,4 +1,6 @@
-package warby;
+package com.github.amsemy.warby;
+
+import static com.github.amsemy.warby.WarbyException.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -6,7 +8,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
-import static warby.WarbyException.*;
 
 /**
  * Параметр действия. Если простого типа, то маппится на параметр запроса.
@@ -45,7 +46,8 @@ class WarbyActionParam {
      * @param  isPojo
      *         Признак того, что параметр является POJO.
      * @throws  WarbyException
-     *          Если тип параметра не удовлетворяет {@link WrbParam допустимым
+     *          Если тип параметра не удовлетворяет
+     *          {@link com.github.amsemy.warby.annotation.WrbParam допустимым
      *          требованиям}.
      */
     private WarbyActionParam(
@@ -164,7 +166,8 @@ class WarbyActionParam {
      *         Признак того, что параметр является POJO.
      * @return  Параметр действия.
      * @throws  WarbyException
-     *          Если тип параметра не удовлетворяет {@link WrbParam допустимым
+     *          Если тип параметра не удовлетворяет
+     *          {@link com.github.amsemy.warby.annotation.WrbParam допустимым
      *          требованиям}.
      */
     static WarbyActionParam newArgument(Object obj, String name, Class<?> type,
@@ -197,7 +200,8 @@ class WarbyActionParam {
      *         Ссылка на поле POJO-параметра.
      * @return  Параметр действия.
      * @throws  WarbyException
-     *          Если тип параметра не удовлетворяет {@link WrbParam допустимым
+     *          Если тип параметра не удовлетворяет
+     *          {@link com.github.amsemy.warby.annotation.WrbParam допустимым
      *          требованиям}.
      */
     static WarbyActionParam newField(Object obj, String name, Class<?> type,
@@ -230,7 +234,8 @@ class WarbyActionParam {
      *         Ссылка на setter-метод POJO-параметра.
      * @return  Параметр действия.
      * @throws  WarbyException
-     *          Если тип параметра не удовлетворяет {@link WrbParam допустимым
+     *          Если тип параметра не удовлетворяет
+     *          {@link com.github.amsemy.warby.annotation.WrbParam допустимым
      *          требованиям}.
      */
     static WarbyActionParam newSetter(Object obj, String name, Class<?> type,

@@ -1,4 +1,4 @@
-package warby;
+package com.github.amsemy.warby.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,7 +12,6 @@ import java.lang.annotation.Target;
  * классов, являющихся обработчиком запросов. Несовместима с аннотацией
  * {@link WrbRequiredParams}.
  *
- * @see  Warby
  * @see  WrbRequest
  * @see  WrbAction
  * @see  WrbDefaultAction

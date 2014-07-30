@@ -1,4 +1,4 @@
-package warby;
+package com.github.amsemy.warby.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

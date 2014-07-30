@@ -1,4 +1,4 @@
-package warby;
+package com.github.amsemy.warby.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,7 +12,6 @@ import java.lang.annotation.Target;
  * является обязательным. Аннотация применима только к аргументам методов и к
  * полям и setter-методам POJO-классов. Не применима к массивам POJO-классов.
  *
- * @see  Warby
  * @see  WrbRequest
  * @see  WrbAction
  * @see  WrbDefaultAction
