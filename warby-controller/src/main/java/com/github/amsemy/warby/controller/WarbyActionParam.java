@@ -1,6 +1,6 @@
-package com.github.amsemy.warby;
+package com.github.amsemy.warby.controller;
 
-import static com.github.amsemy.warby.WarbyException.*;
+import static com.github.amsemy.warby.controller.WarbyException.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

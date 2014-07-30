@@ -1,4 +1,4 @@
-package com.github.amsemy.warby;
+package com.github.amsemy.warby.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

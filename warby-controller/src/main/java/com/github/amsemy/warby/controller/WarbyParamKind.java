@@ -1,4 +1,4 @@
-package com.github.amsemy.warby;
+package com.github.amsemy.warby.controller;
 
 /**
  * Способ отображения парметра запроса на параметр действия.

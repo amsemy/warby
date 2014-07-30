@@ -9,10 +9,10 @@
         <artifactId>warby-pom</artifactId>
         <version>0.2</version>
     </parent>
-    <artifactId>warby</artifactId>
+    <artifactId>warby-controller</artifactId>
     <packaging>jar</packaging>
 
-    <name>Warby</name>
+    <name>Warby controller</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

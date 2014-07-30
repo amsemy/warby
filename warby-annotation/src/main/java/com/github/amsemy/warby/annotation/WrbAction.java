@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * вызван, если запрос содержит AID с именем данного действия. Аннотация
  * применима только к методам классов, являющихся обработчиком запросов.
  *
- * @see  WrbService
+ * @see  WrbController
  * @see  WrbDefaultAction
  * @see  WrbParam
  * @see  WrbRequiredParams

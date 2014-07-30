@@ -1,13 +1,13 @@
-package com.github.amsemy.warby;
+package com.github.amsemy.warby.controller;
 
 import com.github.amsemy.warby.annotation.WrbAction;
+import com.github.amsemy.warby.annotation.WrbController;
 import com.github.amsemy.warby.annotation.WrbDefaultAction;
 import com.github.amsemy.warby.annotation.WrbOptionalParams;
 import com.github.amsemy.warby.annotation.WrbParam;
 import com.github.amsemy.warby.annotation.WrbPojo;
 import com.github.amsemy.warby.annotation.WrbRequiredParams;
-import com.github.amsemy.warby.annotation.WrbService;
-import static com.github.amsemy.warby.WarbyException.*;
+import static com.github.amsemy.warby.controller.WarbyException.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -223,9 +223,9 @@ public class Warby {
          */
         public void build() throws WarbyException {
             Class<?> objCl = Warby.this.obj.getClass();
-            WrbService wrbService = objCl.getAnnotation(WrbService.class);
-            if (wrbService != null) {
-                Warby.this.aidName = wrbService.aidName();
+            WrbController wrbController = objCl.getAnnotation(WrbController.class);
+            if (wrbController != null) {
+                Warby.this.aidName = wrbController.aidName();
                 if (!Warby.this.aidName.isEmpty()) {
                     // Найти и добавить все действия
                     for (Method m : objCl.getDeclaredMethods()) {

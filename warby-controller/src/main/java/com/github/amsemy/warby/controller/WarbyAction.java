@@ -1,6 +1,6 @@
-package com.github.amsemy.warby;
+package com.github.amsemy.warby.controller;
 
-import static com.github.amsemy.warby.WarbyInvokeException.*;
+import static com.github.amsemy.warby.controller.WarbyInvokeException.*;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;

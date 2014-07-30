@@ -12,8 +12,8 @@
     <name>Warby package</name>
 
     <modules>
-        <module>warby</module>
         <module>warby-annotation</module>
+        <module>warby-controller</module>
     </modules>
 
     <build>

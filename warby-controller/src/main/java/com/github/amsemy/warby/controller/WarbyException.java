@@ -1,4 +1,4 @@
-package com.github.amsemy.warby;
+package com.github.amsemy.warby.controller;
 
 /**
  * Общее исключение для всех ошибок, которые возникают при работе с запросами и

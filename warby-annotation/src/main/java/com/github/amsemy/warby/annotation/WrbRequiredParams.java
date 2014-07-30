@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * классов, являющихся обработчиком запросов. Несовместима с аннотацией
  * {@link WrbOptionalParams}.
  *
- * @see  WrbService
+ * @see  WrbController
  * @see  WrbAction
  * @see  WrbDefaultAction
  * @see  WrbOptionalParams

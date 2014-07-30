@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * является обязательным. Аннотация применима только к аргументам методов и к
  * полям и setter-методам POJO-классов. Не применима к массивам POJO-классов.
  *
- * @see  WrbService
+ * @see  WrbController
  * @see  WrbAction
  * @see  WrbDefaultAction
  * @see  WrbRequiredParams
