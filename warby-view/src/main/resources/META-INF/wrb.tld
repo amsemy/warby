@@ -16,7 +16,7 @@
             но использует атрибут value вместо key и bundle.
         </description>
         <name>message</name>
-        <tag-class>com.github.amsemy.warby.view.tag.MessageTag</tag-class>
+        <tag-class>com.github.amsemy.warby.view.tag.WrbMessageTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <description>

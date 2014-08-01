@@ -9,7 +9,7 @@ import javax.servlet.jsp.JspTagException;
 /**
  * Обработчик для &lt;app:message&gt; тега JSTL.
  */
-public class MessageTag extends MessageSupport {
+public class WrbMessageTag extends MessageSupport {
 
     /**
      * Задаёт I18nString-строку, для которой будет выведено локализированное

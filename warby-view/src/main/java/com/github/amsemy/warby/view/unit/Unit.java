@@ -9,7 +9,7 @@ import java.util.List;
  * Юнит. Описывает набор ресурсов необходимый для формирования страницы или её
  * части. Основные ресурсы это - JS (с их зависимостями) и CSS.
  *
- * @see  com.github.amsemy.warby.view.TemplatePage
+ * @see  com.github.amsemy.warby.view.Template
  * @see  View
  * @see  Widget
  */
@@ -68,15 +68,15 @@ public abstract class Unit {
     }
 
     /**
-     * Возвращает список юнитов, от которых зависит юнит, с разрешением
+     * Строит список юнитов, от которых зависит юнит, с разрешением
      * зависимостей.
      *
      * @return  Список юнитов с разрешёнными зависимостями.
      */
-    public List<Unit> getAllUnits() {
+    public List<Unit> buildUnitList() {
         List<Unit> fullList = new ArrayList<>();
         for (Unit u : getUnitList()) {
-            fullList.addAll(u.getAllUnits());
+            fullList.addAll(u.buildUnitList());
             fullList.add(u);
         }
         return fullList;

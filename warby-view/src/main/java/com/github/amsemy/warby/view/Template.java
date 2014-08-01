@@ -22,81 +22,13 @@ import javax.servlet.http.HttpServletResponse;
  * Шаблонная JSP-страница. Ответ сервера клиенту, который имеет представление в
  * виде шаблонной JSP-страницы. Может включать в себя юниты.
  *
- * @see  SimplePage
- * @see  Unit
+ * @see  Page
+ * @see  com.github.amsemy.warby.view.unit.Unit
  */
-public abstract class TemplatePage implements RequestSettable, Viewable {
-
-    /**
-     * Бин шаблонной страницы.
-     */
-    @RstPojo
-    public class Bean {
-
-        /**
-         * Список скриптов страницы.
-         */
-        public Collection<String> jscriptList;
-
-        /**
-         * Список стилей страницы.
-         */
-        public Collection<String> styleList;
-
-        /**
-         * Создаёт бин.
-         */
-        public Bean() {
-            List<Unit> units = buildUnitList(getUnitList());
-            jscriptList = buildJscriptList(units);
-            styleList = buildStyleList(units);
-        }
-
-        /**
-         * Возвращает конфигурацию страницы.
-         *
-         * @return  Строка, содержащая JSON.
-         */
-        public String getConfig() {
-            try {
-                return RestyJson.build(this).toString();
-            } catch (RestyMappingException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-
-        /**
-         * Возвращает язык страницы.
-         *
-         * @return  Код языка страницы или пустая строка, если язык не определён.
-         */
-        @RstGetter("lang")
-        public String getLang() {
-            return locale.getLanguage();
-        }
-
-        /**
-         * Возвращает название импользуемого макета шаблона (из {@code /templates}).
-         *
-         * @return  Название используемого макета шаблона.
-         */
-        public String getTemplateName() {
-            return templateName;
-        }
-
-    }
+@RstPojo
+public abstract class Template implements Viewable {
 
     private Locale locale;
-
-    /**
-     * Список юнитов, от которых зависит страница.
-     */
-    protected List<Unit> unitList;
-
-    /**
-     * Путь до JSP-страницы, которая содержит шаблон.
-     */
-    protected String path = null;
 
     /**
      * Название используемого макета шаблона (из {@code /templates}).
@@ -104,9 +36,29 @@ public abstract class TemplatePage implements RequestSettable, Viewable {
     protected String templateName = null;
 
     /**
+     * Путь до JSP-страницы, которая содержит шаблон.
+     */
+    protected String path = null;
+
+    /**
+     * Список скриптов страницы.
+     */
+    protected Collection<String> jscriptList = null;
+
+    /**
+     * Список стилей страницы.
+     */
+    protected Collection<String> styleList = null;
+
+    /**
+     * Список юнитов, от которых зависит страница.
+     */
+    protected List<Unit> unitList;
+
+    /**
      * Создаёт страницу.
      */
-    private TemplatePage() {
+    private Template() {
         unitList = new ArrayList<>();
     }
 
@@ -116,7 +68,7 @@ public abstract class TemplatePage implements RequestSettable, Viewable {
      * @param  locale
      *         Локаль страницы.
      */
-    public TemplatePage(Locale locale) {
+    public Template(Locale locale) {
         this();
         this.locale = locale;
     }
@@ -160,7 +112,7 @@ public abstract class TemplatePage implements RequestSettable, Viewable {
     private List<Unit> buildUnitList(List<Unit> unitList) {
         List<Unit> result = new ArrayList<>();
         for(Unit u : unitList) {
-            result.addAll(u.getAllUnits());
+            result.addAll(u.buildUnitList());
             result.add(u);
         }
         return result;
@@ -168,6 +120,56 @@ public abstract class TemplatePage implements RequestSettable, Viewable {
 
     private String formatPath(String str) {
         return str.replaceAll("\\$\\{lang\\}", locale.getLanguage());
+    }
+
+    /**
+     * Возвращает конфигурацию страницы.
+     *
+     * @return  Строка, содержащая JSON.
+     */
+    public String getConfig() {
+        try {
+            return RestyJson.build(this).toString();
+        } catch (RestyMappingException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Возвращает список скриптов страницы.
+     *
+     * @return  Список скриптов страницы.
+     */
+    public Collection<String> getJscriptList() {
+        return jscriptList;
+    }
+
+    /**
+     * Возвращает язык страницы.
+     *
+     * @return  Код языка страницы или пустая строка, если язык не определён.
+     */
+    @RstGetter("lang")
+    public String getLang() {
+        return locale.getLanguage();
+    }
+
+    /**
+     * Возвращает список стилей страницы.
+     *
+     * @return  Список стилей страницы.
+     */
+    public Collection<String> getStyleList() {
+        return styleList;
+    }
+
+    /**
+     * Возвращает название импользуемого макета шаблона (из {@code /templates}).
+     *
+     * @return  Название используемого макета шаблона.
+     */
+    public String getTemplateName() {
+        return templateName;
     }
 
     /**
@@ -187,9 +189,17 @@ public abstract class TemplatePage implements RequestSettable, Viewable {
         req.getRequestDispatcher(path).forward(req, resp);
     }
 
-    @Override
+    /**
+     * Помещает страницу в атрибуты запроса.
+     *
+     * @param  request
+     *         Объект, который содержит запрос клиента к сервлету.
+     */
     public void setToRequest(ServletRequest request) {
-        request.setAttribute("templatePage", new Bean());
+        List<Unit> units = buildUnitList(getUnitList());
+        jscriptList = buildJscriptList(units);
+        styleList = buildStyleList(units);
+        request.setAttribute("templatePage", this);
     }
 
 }

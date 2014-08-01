@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
  * JSP-страница. Ответ сервера клиенту, который имеет представление в виде
  * JSP-страницы.
  *
- * @see  TemplatePage
+ * @see  Template
  */
-public abstract class SimplePage implements Viewable {
+public abstract class Page implements Viewable {
 
     /**
      * Путь к JSP-странице.
