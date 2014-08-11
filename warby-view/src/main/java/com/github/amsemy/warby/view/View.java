@@ -11,7 +11,7 @@ import com.github.amsemy.resty.json.annotation.RstPojo;
 public abstract class View extends Widget {
 
     {
-        constructor = "com.github.amsemy.warby.view.View";
+        constructor = "com.github.amsemy.warby.View";
     }
 
     /**
