@@ -4,10 +4,8 @@ import com.github.amsemy.resty.json.RestyJson;
 import com.github.amsemy.resty.json.RestyMappingException;
 import com.github.amsemy.resty.json.annotation.RstGetter;
 import com.github.amsemy.resty.json.annotation.RstPojo;
-import com.github.amsemy.warby.view.unit.Unit;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -23,10 +21,10 @@ import javax.servlet.http.HttpServletResponse;
  * виде шаблонной JSP-страницы. Может включать в себя юниты.
  *
  * @see  Page
- * @see  com.github.amsemy.warby.view.unit.Unit
+ * @see  Unit
  */
 @RstPojo
-public abstract class Template implements Viewable {
+public abstract class Template extends Unit implements Viewable {
 
     private Locale locale;
 
@@ -40,27 +38,9 @@ public abstract class Template implements Viewable {
      */
     protected String path = null;
 
-    /**
-     * Список скриптов страницы.
-     */
-    protected Collection<String> jscriptList = null;
+    private Collection<String> jscripts = null;
 
-    /**
-     * Список стилей страницы.
-     */
-    protected Collection<String> styleList = null;
-
-    /**
-     * Список юнитов, от которых зависит страница.
-     */
-    protected List<Unit> unitList;
-
-    /**
-     * Создаёт страницу.
-     */
-    private Template() {
-        unitList = new ArrayList<>();
-    }
+    private Collection<String> styles = null;
 
     /**
      * Создаёт страницу.
@@ -69,18 +49,7 @@ public abstract class Template implements Viewable {
      *         Локаль страницы.
      */
     public Template(Locale locale) {
-        this();
         this.locale = locale;
-    }
-
-    /**
-     * Добавляет юнит в зависимости страницы.
-     *
-     * @param  unit
-     *         Юнит.
-     */
-    public void addUnit(Unit unit) {
-        unitList.add(unit);
     }
 
     private Collection<String> buildJscriptList(List<Unit> unitList) {
@@ -109,15 +78,6 @@ public abstract class Template implements Viewable {
         return result;
     }
 
-    private List<Unit> buildUnitList(List<Unit> unitList) {
-        List<Unit> result = new ArrayList<>();
-        for(Unit u : unitList) {
-            result.addAll(u.buildUnitList());
-            result.add(u);
-        }
-        return result;
-    }
-
     private String formatPath(String str) {
         return str.replaceAll("\\$\\{lang\\}", locale.getLanguage());
     }
@@ -136,12 +96,12 @@ public abstract class Template implements Viewable {
     }
 
     /**
-     * Возвращает список скриптов страницы.
+     * Возвращает список всех скриптов страницы.
      *
      * @return  Список скриптов страницы.
      */
-    public Collection<String> getJscriptList() {
-        return jscriptList;
+    public Collection<String> getJscripts() {
+        return jscripts;
     }
 
     /**
@@ -155,12 +115,12 @@ public abstract class Template implements Viewable {
     }
 
     /**
-     * Возвращает список стилей страницы.
+     * Возвращает список всех стилей страницы.
      *
      * @return  Список стилей страницы.
      */
-    public Collection<String> getStyleList() {
-        return styleList;
+    public Collection<String> getStyles() {
+        return styles;
     }
 
     /**
@@ -170,16 +130,6 @@ public abstract class Template implements Viewable {
      */
     public String getTemplateName() {
         return templateName;
-    }
-
-    /**
-     * Возвращает список юнитов, используемых страницей. Необходимо перекрывать
-     * в наследниках.
-     *
-     * @return  Список юнитов.
-     */
-    protected List<Unit> getUnitList() {
-        return unitList;
     }
 
     @Override
@@ -196,9 +146,9 @@ public abstract class Template implements Viewable {
      *         Объект, который содержит запрос клиента к сервлету.
      */
     public void setToRequest(ServletRequest request) {
-        List<Unit> units = buildUnitList(getUnitList());
-        jscriptList = buildJscriptList(units);
-        styleList = buildStyleList(units);
+        List<Unit> allUnits = buildFullUnitList();
+        jscripts = buildJscriptList(allUnits);
+        styles = buildStyleList(allUnits);
         request.setAttribute("templatePage", this);
     }
 

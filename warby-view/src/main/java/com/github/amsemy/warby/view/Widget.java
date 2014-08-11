@@ -1,8 +1,7 @@
-package com.github.amsemy.warby.view.unit;
+package com.github.amsemy.warby.view;
 
 import com.github.amsemy.resty.json.annotation.RstField;
 import com.github.amsemy.resty.json.annotation.RstPojo;
-import com.github.amsemy.warby.view.I18nString;
 
 /**
  * Виджет. Это JSP-код и набор ресурсов к нему. Может быть размещён в секции на

@@ -1,4 +1,4 @@
-package com.github.amsemy.warby.view.unit;
+package com.github.amsemy.warby.view;
 
 import com.github.amsemy.resty.json.annotation.RstPojo;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * Юнит. Описывает набор ресурсов необходимый для формирования страницы или её
  * части. Основные ресурсы это - JS (с их зависимостями) и CSS.
  *
- * @see  com.github.amsemy.warby.view.Template
+ * @see  Template
  * @see  View
  * @see  Widget
  */
@@ -73,12 +73,12 @@ public abstract class Unit {
      *
      * @return  Список юнитов с разрешёнными зависимостями.
      */
-    public List<Unit> buildUnitList() {
+    public List<Unit> buildFullUnitList() {
         List<Unit> fullList = new ArrayList<>();
         for (Unit u : getUnitList()) {
-            fullList.addAll(u.buildUnitList());
-            fullList.add(u);
+            fullList.addAll(u.buildFullUnitList());
         }
+        fullList.add(this);
         return fullList;
     }
 
@@ -87,7 +87,7 @@ public abstract class Unit {
      *
      * @return  Список путей до скриптов.
      */
-    public List<String> getJscriptList() {
+    protected List<String> getJscriptList() {
         return jscriptList;
     }
 
@@ -96,7 +96,7 @@ public abstract class Unit {
      *
      * @return  Список путей до стилей.
      */
-    public List<String> getStyleList() {
+    protected List<String> getStyleList() {
         return styleList;
     }
 
@@ -105,7 +105,7 @@ public abstract class Unit {
      *
      * @return  Список юнитов.
      */
-    public List<Unit> getUnitList() {
+    protected List<Unit> getUnitList() {
         return unitList;
     }
 
