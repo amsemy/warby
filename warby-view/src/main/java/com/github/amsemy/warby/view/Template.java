@@ -149,7 +149,7 @@ public abstract class Template extends Unit implements Viewable {
         List<Unit> allUnits = buildFullUnitList();
         jscripts = buildJscriptList(allUnits);
         styles = buildStyleList(allUnits);
-        request.setAttribute("templatePage", this);
+        request.setAttribute("template", this);
     }
 
 }
